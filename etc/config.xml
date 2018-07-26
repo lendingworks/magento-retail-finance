@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <lendingworks_retailfinance>
+                <active>0</active>
+                <model>LendingWorks\RetailFinance\Model\Payment</model>
+                <payment_action>authorize_capture</payment_action>
+                <title>Lending Works Retail Finance</title>
+                <api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <target_server>int</target_server>
+                <min_order_total>50.00</min_order_total>
+                <max_order_total>25000.00</max_order_total>
+            </lendingworks_retailfinance>
+        </payment>
+    </default>
+</config>
