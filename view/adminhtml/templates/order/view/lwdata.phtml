@@ -1,0 +1,34 @@
+<?php /** @var $block \LendingWorks\RetailFinance\Block\Adminhtml\Order\View\LendingWorksData */ ?>
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo $block->escapeHtml(__('Lending Works Data')) ?></span>
+    </div>
+    <div class="admin__page-section-content">
+    <table class="admin__table-secondary order-information-table-lwdata" id="order-information-table-lwdata">
+        <tbody>
+        <tr>
+            <th>Lending Works Order ID</th>
+            <td><?php echo $block->escapeHtml(__($block->getLWID())) ?></td>
+        </tr>
+        <tr>
+            <th>Lending Works Order Status</th>
+            <td><?php echo $block->escapeHtml($block->getLWStatus()) ?></td>
+        </tr>
+        <tr>
+            <th>Lending Works Order Fulfilment Status</th>
+            <td><?php echo $block->escapeHtml($block->getLWFulfilmentStatus()) ?>
+                <?php if ($block->canFulfill()) : ?>
+                <?php $url = $block->escapeUrl('/lwapi/order/fulfillorder?lw_id=' . $block->getLWID()) ?>
+                    <br><a
+                            href="#order-information-table-lwdata"
+                            onclick="confirmSetLocation(
+                                'Are you sure you want to fulfill this order?',
+                                '<?php echo $url ?>')"
+                    >Fulfill this order?</a>
+                <?php endif; ?>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</section>
