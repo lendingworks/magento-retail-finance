@@ -12,25 +12,24 @@ class TargetServerType implements ArrayInterface
    *
    * @return array
    */
-  public function toOptionArray()
-  {
-    return [
-      ['value' => Data::TESTING, 'label' => __(Data::TESTING_LABEL)],
-      ['value' => Data::PRODUCTION, 'label' => __(Data::PRODUCTION_LABEL)],
-    ];
-  }
+    public function toOptionArray()
+    {
+        return [
+        ['value' => Data::TESTING, 'label' => Data::TESTING_LABEL],
+        ['value' => Data::PRODUCTION, 'label' => Data::PRODUCTION_LABEL],
+        ];
+    }
 
   /**
    * Get options in "key-value" format
    *
    * @return array
    */
-  public function toArray()
-  {
-    return [
-      Data::TESTING => __(Data::TESTING_LABEL),
-      Data::PRODUCTION => __(Data::PRODUCTION_LABEL),
-    ];
-  }
-
+    public function toArray()
+    {
+        return [
+        Data::TESTING => Data::TESTING_LABEL,
+        Data::PRODUCTION => Data::PRODUCTION_LABEL,
+        ];
+    }
 }
