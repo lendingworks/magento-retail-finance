@@ -82,6 +82,7 @@ class CreateOrder extends BaseAPIHandler
     private function buildProductsData($quote)
     {
         $products = [];
+        $discount = 0.0000;
         /** @var Item $item */
         foreach ($quote->getItems() as $item) {
             $products[] = [
@@ -89,6 +90,9 @@ class CreateOrder extends BaseAPIHandler
             'quantity' => $item->getQty(),
             'description' => $item->getDescription() ?: $item->getName(),
             ];
+            if ($item->getDiscountAmount() > 0) {
+                $discount -= $item->getDiscountAmount();
+            }
         }
 
         // Add shipping data
@@ -97,6 +101,15 @@ class CreateOrder extends BaseAPIHandler
         'quantity' => 1.0,
         'description' => 'Shipping: ' . $quote->getShippingAddress()->getShippingDescription()
         ];
+
+        // Add any discount
+        if ($discount < 0) {
+            $products[] = [
+            'cost' => number_format($discount, 4, '.', ''),
+            'quantity' => 1.0,
+            'description' => 'Discount'
+            ];
+        }
 
         return [
         'amount' => $quote->getGrandTotal(),
