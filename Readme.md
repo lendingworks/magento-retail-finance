@@ -8,6 +8,14 @@ This module will introduce a new payment method to your checkout that allows a u
 - An API key (contact [partnerships@lendingworks.co.uk](mailto:partnerships@lendingworks.co.uk) for more information on this)
 - A shop that operates in British Pounds
 
+## Installation
+
+You can either acquire a release from the Magento Marketplace, or install via composer:
+
+```bash
+composer require lendingworks/magento2-retailfinance
+```
+
 ## Configuration
 
 ![Payment Configuration](./screenshots/payment_configuration.png "Payment Configuration")

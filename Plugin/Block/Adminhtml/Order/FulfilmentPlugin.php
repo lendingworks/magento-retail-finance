@@ -29,7 +29,7 @@ class FulfilmentPlugin
     {
         $order = $view->getOrder();
         $fulfillEnabled = $this->scopeConfig->getValue('payment/' . Data::PAYMENT_CODE . '/allow_manual_fulfilment');
-        $isFulfillable = Data::isFulfillableStatus($order->getData( Data::ORDER_FULFILMENT_STATUS_ATTRIBUTE_KEY));
+        $isFulfillable = Data::isFulfillableStatus($order->getData(Data::ORDER_FULFILMENT_STATUS_ATTRIBUTE_KEY));
         if ($fulfillEnabled && $isFulfillable) {
             $message = 'Are you sure you want to fulfill this order?';
             $lwID = $order->getData(Data::ORDER_ID_ATTRIBUTE_KEY);
