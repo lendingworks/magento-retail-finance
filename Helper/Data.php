@@ -38,9 +38,9 @@ class Data extends AbstractHelper
     const API_CREATE_ORDER_ENDPOINT = '/orders';
     const API_FULFILL_ORDER_ENDPOINT = '/orders/loan-request/fulfill';
 
-  /**
-   * @return array
-   */
+    /**
+     * @return array
+     */
     public static function getOverrides()
     {
         $envPath = BP . '/app/etc/env.php';
@@ -54,11 +54,11 @@ class Data extends AbstractHelper
         return [];
     }
 
-  /**
-   * @param string $environment
-   *
-   * @return string|null
-   */
+    /**
+     * @param string $environment
+     *
+     * @return string|null
+     */
     public static function getBaseURLForEnvironment($environment)
     {
         if (isset(self::getOverrides()[self::OVERRIDE_BASE_URL_KEY])) {
@@ -75,11 +75,11 @@ class Data extends AbstractHelper
         }
     }
 
-  /**
-   * @param string $environment
-   *
-   * @return string|null
-   */
+    /**
+     * @param string $environment
+     *
+     * @return string|null
+     */
     public static function getCheckoutScriptSourceForEnvironment($environment)
     {
         if (isset(self::getOverrides()[self::OVERRIDE_SCRIPT_SOURCE_KEY])) {
@@ -95,14 +95,14 @@ class Data extends AbstractHelper
         }
     }
 
-  /**
-   * @param string $status
-   *
-   * @return bool
-   */
+    /**
+     * @param string $status
+     *
+     * @return bool
+     */
     public static function isValidStatus($status)
     {
-        return in_array($status, [
+        return self::in_array_i($status, [
         self::ORDER_STATUS_APPROVED,
         self::ORDER_STATUS_ACCEPTED,
         self::ORDER_STATUS_CANCELLED,
@@ -112,16 +112,27 @@ class Data extends AbstractHelper
         ]);
     }
 
-  /**
-   * @param $status
-   *
-   * @return bool
-   */
+    /**
+     * @param $status
+     *
+     * @return bool
+     */
     public static function isFulfillableStatus($status)
     {
-        return in_array($status, [
+        return self::in_array_i($status, [
         self::ORDER_FULFILMENT_STATUS_UNFULFILLED,
         self::ORDER_FULFILMENT_STATUS_ERROR
         ]);
+    }
+
+    /**
+     * @param string $needle
+     * @param array $haystack
+     *
+     * @return bool
+     */
+    protected static function in_array_i($needle, $haystack)
+    {
+          return in_array(strtolower($needle), array_map('strtolower', $haystack));
     }
 }
