@@ -24,6 +24,7 @@ class Data extends AbstractHelper
     const OVERRIDE_MOCK_API_RESPONSE_KEY = 'mock_successful_api_response';
 
     const ORDER_STATUS_APPROVED = 'Approved';
+    const ORDER_STATUS_ACCEPTED = 'Accepted';
     const ORDER_STATUS_CANCELLED = 'Cancelled';
     const ORDER_STATUS_REFERRED = 'Referred';
     const ORDER_STATUS_EXPIRED = 'Expired';
@@ -103,6 +104,7 @@ class Data extends AbstractHelper
     {
         return in_array($status, [
         self::ORDER_STATUS_APPROVED,
+        self::ORDER_STATUS_ACCEPTED,
         self::ORDER_STATUS_CANCELLED,
         self::ORDER_STATUS_DECLINED,
         self::ORDER_STATUS_EXPIRED,

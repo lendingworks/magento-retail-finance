@@ -91,10 +91,17 @@ define(
                                     return;
                                 }
 
-                                if (['approved', 'referred'].indexOf(status) !== -1) {
+                                if (['accepted', 'approved', 'referred'].indexOf(status) !== -1) {
                                     self.setLWDetailsForQuote(status, id, data, event);
                                     return;
+                                } else {
+                                    $('#lw-place-order').removeAttr('disabled');
+                                    messages.addErrorMessage({
+                                        message: 'An error has occurred with your application. Please select another payment method or contact your site administrator.'
+                                    });
+                                    return;
                                 }
+
                             }
                         )()
 
