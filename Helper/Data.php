@@ -67,7 +67,7 @@ class Data extends AbstractHelper
 
         switch ($environment) {
             case self::TESTING:
-                return 'http://integration.lendingworks.co.uk/api/v2';
+                return 'https://integration.lendingworks.co.uk/api/v2';
             case self::PRODUCTION:
                 return 'https://www.lendingworks.co.uk/api/v2';
             default:
