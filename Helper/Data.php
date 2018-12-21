@@ -29,6 +29,7 @@ class Data extends AbstractHelper
     const ORDER_STATUS_REFERRED = 'Referred';
     const ORDER_STATUS_EXPIRED = 'Expired';
     const ORDER_STATUS_DECLINED = 'Declined';
+    const ORDER_STATUS_FULFILLED = 'Fulfilled';
 
     const ORDER_FULFILMENT_STATUS_UNFULFILLED = 'Unfulfilled';
     const ORDER_FULFILMENT_STATUS_PENDING = 'Pending';
@@ -108,6 +109,8 @@ class Data extends AbstractHelper
         self::ORDER_STATUS_CANCELLED,
         self::ORDER_STATUS_DECLINED,
         self::ORDER_STATUS_EXPIRED,
+        self::ORDER_STATUS_EXPIRED,
+        self::ORDER_STATUS_FULFILLED,
         self::ORDER_STATUS_REFERRED
         ]);
     }
