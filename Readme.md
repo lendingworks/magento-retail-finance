@@ -64,7 +64,8 @@ You can see all of these fields in the order summary in **Sales > Orders**
 
 Order statuses gets updated via callback url (**https://{your-domain-name}/lwapi/order/callback**) once registered with us.
 
-A LendingWorks order is updated via webhook when - 
+A LendingWorks order is updated via webhook when:
+
 - marked as 'expired'
 - marked as 'cancelled'
 - marked as 'fulfilled'
@@ -75,11 +76,14 @@ A LendingWorks order is updated via webhook when -
 
 An example callback request body will look like the following:
 
-`{
+```json
+{
   "reference":"SMPLXXXXXX",
   "status":"approved",
   "timestamp":1543418504
-}`
+}
+```
+
 
 ![Updated Order Grid](./screenshots/order_grid.png "Order Grid")
 \ 
