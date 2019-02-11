@@ -59,8 +59,9 @@ class FulfillOrder extends BaseAPIHandler
         if (!$order) {
             return $this->redirectBack();
         }
-
+        // @codingStandardsIgnoreStart JSON_PRESERVE_ZERO_FRACTION is handled in BaseAPIHandler
         $postData = json_encode(['reference' => $lwID], JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
+        // @codingStandardsIgnoreEnd
         if (json_last_error() !== JSON_ERROR_NONE) {
             return $this->result(400, 'Unable to encode fulfillOrder message body: ' . json_last_error_msg());
         }

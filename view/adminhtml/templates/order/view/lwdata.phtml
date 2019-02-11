@@ -12,11 +12,11 @@
         </tr>
         <tr>
             <th>Lending Works Order Status</th>
-            <td><?php echo $block->escapeHtml($block->getLWStatus()) ?></td>
+            <td><?php echo $block->escapeHtml(ucfirst($block->getLWStatus())) ?></td>
         </tr>
         <tr>
             <th>Lending Works Order Fulfilment Status</th>
-            <td><?php echo $block->escapeHtml($block->getLWFulfilmentStatus()) ?>
+            <td><?php echo $block->escapeHtml(ucfirst($block->getLWFulfilmentStatus())) ?>
                 <?php if ($block->canFulfill()) : ?>
                 <?php $url = $block->escapeUrl('/lwapi/order/fulfillorder?lw_id=' . $block->getLWID()) ?>
                     <br><a

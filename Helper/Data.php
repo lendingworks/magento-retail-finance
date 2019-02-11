@@ -37,7 +37,7 @@ class Data extends AbstractHelper
     const ORDER_FULFILMENT_STATUS_COMPLETE = 'Complete';
 
     const API_CREATE_ORDER_ENDPOINT = '/orders';
-    const API_FULFILL_ORDER_ENDPOINT = '/orders/loan-request/fulfill';
+    const API_FULFILL_ORDER_ENDPOINT = '/loan-requests/fulfill';
 
     /**
      * @return array
@@ -68,7 +68,7 @@ class Data extends AbstractHelper
 
         switch ($environment) {
             case self::TESTING:
-                return 'https://integration.lendingworks.co.uk/api/v2';
+                return 'https://retail-sandbox.lendingworks.co.uk/api/v2';
             case self::PRODUCTION:
                 return 'https://www.lendingworks.co.uk/api/v2';
             default:
@@ -88,7 +88,7 @@ class Data extends AbstractHelper
         }
         switch ($environment) {
             case self::TESTING:
-                return 'https://integration.secure.lendingworks.co.uk/checkout.js';
+                return 'https://retail-sandbox.secure.lendingworks.co.uk/checkout.js';
             case self::PRODUCTION:
                 return 'https://secure.lendingworks.co.uk/checkout.js';
             default:
@@ -136,6 +136,6 @@ class Data extends AbstractHelper
      */
     protected static function in_array_i($needle, $haystack)
     {
-          return in_array(strtolower($needle), array_map('strtolower', $haystack));
+        return in_array(strtolower($needle), array_map('strtolower', $haystack));
     }
 }

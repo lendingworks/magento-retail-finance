@@ -5,9 +5,6 @@ namespace LendingWorks\RetailFinance\Controller\Order;
 use LendingWorks\RetailFinance\Controller\BaseAPIHandler;
 use LendingWorks\RetailFinance\Helper\Data;
 use Magento\Framework\App\ResponseInterface;
-use Magento\Framework\App\CsrfAwareActionInterface;
-use Magento\Framework\App\Request\InvalidRequestException;
-use Magento\Framework\App\RequestInterface;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Action\Context;
@@ -18,7 +15,8 @@ use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Model\OrderRepository;
 use Psr\Log\LoggerInterface;
 
-class Callback extends BaseAPIHandler implements CsrfAwareActionInterface
+class Callback extends BaseAPIHandler
+
 {
     /**
      * @var QuoteRepository
@@ -57,24 +55,14 @@ class Callback extends BaseAPIHandler implements CsrfAwareActionInterface
         $this->quoteRepository = $quoteRepository;
         $this->orderRepository = $orderRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function createCsrfValidationException(
-        RequestInterface $request
-    ): ?InvalidRequestException {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     * allows to post data to controller
-     */
-    public function validateForCsrf(RequestInterface $request): ?bool
-    {
-        return true;
+        // Fix for Magento2.3 adding isAjax to the request params
+        if (interface_exists("\Magento\Framework\App\CsrfAwareActionInterface")) {
+            $request = $this->getRequest();
+            if ($request instanceof HttpRequest && $request->isPost()) {
+                $request->setParam('isAjax', true);
+            }
+        }
     }
 
     /**
