@@ -48,6 +48,11 @@ abstract class BaseAPIHandler extends Action
         $this->scopeConfig = $scopeConfig;
         $this->checkoutSession = $checkoutSession;
         $this->logger = $logger;
+
+        // Handles pre-5.6.6 versions of PHP 5.6
+        if (!defined('JSON_PRESERVE_ZERO_FRACTION')) {
+            define('JSON_PRESERVE_ZERO_FRACTION', 1024);
+        }
     }
 
   /**

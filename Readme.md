@@ -62,6 +62,29 @@ Three database fields have been added to both the `Quote` and the `Order` object
 
 You can see all of these fields in the order summary in **Sales > Orders**
 
+Order statuses gets updated via callback url (**https://{your-domain-name}/lwapi/order/callback**) once registered with us.
+
+A LendingWorks order is updated via webhook when:
+
+- marked as 'expired'
+- marked as 'cancelled'
+- marked as 'fulfilled'
+- you have a 'referred' loan application and  it is
+    - approved
+    - declined
+    - accepted
+
+An example callback request body will look like the following:
+
+```json
+{
+  "reference":"SMPLXXXXXX",
+  "status":"approved",
+  "timestamp":1543418504
+}
+```
+
+
 ![Updated Order Grid](./screenshots/order_grid.png "Order Grid")
 \ 
 

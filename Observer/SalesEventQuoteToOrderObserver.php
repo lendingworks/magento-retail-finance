@@ -2,6 +2,7 @@
 
 namespace LendingWorks\RetailFinance\Observer;
 
+use LendingWorks\RetailFinance\Helper\Data;
 use Magento\Framework\DataObject\Copy;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
@@ -30,10 +31,21 @@ class SalesEventQuoteToOrderObserver implements ObserverInterface
    */
     public function execute(Observer $observer)
     {
-        /** @var Order $order */
-        $order = $observer->getEvent()->getData('order');
         /** @var Quote $quote */
         $quote = $observer->getEvent()->getData('quote');
+
+        if ($quote->getPayment()->getMethod() !== Data::PAYMENT_CODE) {
+            return $this;
+        }
+
+        $lendingWorksID = $quote->getData(Data::ORDER_ID_ATTRIBUTE_KEY);
+
+        if ($lendingWorksID === null || $lendingWorksID === '') {
+            throw new \RuntimeException('Lending Works ID not found for Retail Finance order');
+        }
+
+        /** @var Order $order */
+        $order = $observer->getEvent()->getData('order');
 
         $this->objectCopyService->copyFieldsetToTarget('sales_convert_quote', 'to_order', $quote, $order);
         return $this;

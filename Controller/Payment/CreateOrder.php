@@ -25,8 +25,9 @@ class CreateOrder extends BaseAPIHandler
         if (!$quote) {
             return $this->result(404, "Order not found");
         }
-
+        // @codingStandardsIgnoreStart JSON_PRESERVE_ZERO_FRACTION is handled in BaseAPIHandler
         $postData = json_encode($this->buildProductsData($quote), JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
+        // @codingStandardsIgnoreEnd
         if (json_last_error() !== JSON_ERROR_NONE) {
             return $this->result(400, 'Unable to encode createOrder message body'. json_last_error_msg());
         }
