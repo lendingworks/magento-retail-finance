@@ -9,7 +9,6 @@ use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\App\Request\Http as HttpRequest;
 use Magento\Framework\Exception\NotFoundException;
 use Magento\Quote\Model\QuoteRepository;
 use Magento\Sales\Api\Data\OrderInterface;
@@ -17,6 +16,7 @@ use Magento\Sales\Model\OrderRepository;
 use Psr\Log\LoggerInterface;
 
 class Callback extends BaseAPIHandler
+
 {
     /**
      * @var QuoteRepository
