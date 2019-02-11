@@ -7,7 +7,7 @@
     "OSL-3.0"
   ],
   "require": {
-    "magento/framework": "^100|^101",
+    "magento/framework": "^100|^101|^102|^103",
     "guzzlehttp/guzzle": "^6.3",
     "ext-json": "*"
   },
