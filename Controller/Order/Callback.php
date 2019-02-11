@@ -16,7 +16,6 @@ use Magento\Sales\Model\OrderRepository;
 use Psr\Log\LoggerInterface;
 
 class Callback extends BaseAPIHandler
-
 {
     /**
      * @var QuoteRepository
