@@ -62,6 +62,10 @@ Three database fields have been added to both the `Quote` and the `Order` object
 
 You can see all of these fields in the order summary in **Sales > Orders**
 
+
+![Updated Order Grid](./screenshots/order_grid.png "Order Grid")
+\ 
+
 Order statuses gets updated via callback url (**https://{your-domain-name}/lwapi/order/callback**) once registered with us.
 
 A LendingWorks order is updated via webhook when:
@@ -83,10 +87,6 @@ An example callback request body will look like the following:
   "timestamp":1543418504
 }
 ```
-
-
-![Updated Order Grid](./screenshots/order_grid.png "Order Grid")
-\ 
 
 ## Order fulfilment
 
