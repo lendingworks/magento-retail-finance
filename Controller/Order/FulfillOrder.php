@@ -34,9 +34,10 @@ class FulfillOrder extends BaseAPIHandler
         CheckoutSession $checkoutSession,
         LoggerInterface $logger,
         OrderRepository $orderRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        Data $dataHelper
     ) {
-        parent::__construct($context, $scopeConfig, $checkoutSession, $logger);
+        parent::__construct($context, $scopeConfig, $checkoutSession, $logger, $dataHelper);
         $this->orderRepository = $orderRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }

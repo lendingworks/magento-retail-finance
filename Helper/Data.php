@@ -2,7 +2,9 @@
 
 namespace LendingWorks\RetailFinance\Helper;
 
+use Magento\Framework\App\DeploymentConfig;
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\Context;
 
 class Data extends AbstractHelper
 {
@@ -40,19 +42,24 @@ class Data extends AbstractHelper
     const API_FULFILL_ORDER_ENDPOINT = '/loan-requests/fulfill';
 
     /**
+     * @var DeploymentConfig
+     */
+    protected $deploymentConfig;
+
+    public function __construct(Context $context, DeploymentConfig $deploymentConfig)
+    {
+        parent::__construct($context);
+
+        $this->deploymentConfig = $deploymentConfig;
+    }
+
+    /**
      * @return array
      */
-    public static function getOverrides()
+    public function getOverrides()
     {
-        $envPath = BP . '/app/etc/env.php';
-        if (file_exists($envPath) && is_readable($envPath)) {
-            $envData = include $envPath;
-            if (isset($envData[self::OVERRIDES_KEY])) {
-                return $envData[self::OVERRIDES_KEY];
-            }
-        }
-
-        return [];
+        $overrides = $this->deploymentConfig->getConfigData(self::OVERRIDES_KEY);
+        return $overrides !== null ? $overrides : [];
     }
 
     /**
@@ -60,10 +67,10 @@ class Data extends AbstractHelper
      *
      * @return string|null
      */
-    public static function getBaseURLForEnvironment($environment)
+    public function getBaseURLForEnvironment($environment)
     {
-        if (isset(self::getOverrides()[self::OVERRIDE_BASE_URL_KEY])) {
-            return self::getOverrides()[self::OVERRIDE_BASE_URL_KEY];
+        if (isset($this->getOverrides()[self::OVERRIDE_BASE_URL_KEY])) {
+            return $this->getOverrides()[self::OVERRIDE_BASE_URL_KEY];
         }
 
         switch ($environment) {
@@ -81,10 +88,10 @@ class Data extends AbstractHelper
      *
      * @return string|null
      */
-    public static function getCheckoutScriptSourceForEnvironment($environment)
+    public function getCheckoutScriptSourceForEnvironment($environment)
     {
-        if (isset(self::getOverrides()[self::OVERRIDE_SCRIPT_SOURCE_KEY])) {
-            return self::getOverrides()[self::OVERRIDE_SCRIPT_SOURCE_KEY];
+        if (isset($this->getOverrides()[self::OVERRIDE_SCRIPT_SOURCE_KEY])) {
+            return $this->getOverrides()[self::OVERRIDE_SCRIPT_SOURCE_KEY];
         }
         switch ($environment) {
             case self::TESTING:
@@ -103,7 +110,7 @@ class Data extends AbstractHelper
      */
     public static function isValidStatus($status)
     {
-        return self::in_array_i($status, [
+        return self::inArrayCaseInsensitive($status, [
         self::ORDER_STATUS_APPROVED,
         self::ORDER_STATUS_ACCEPTED,
         self::ORDER_STATUS_CANCELLED,
@@ -122,7 +129,7 @@ class Data extends AbstractHelper
      */
     public static function isFulfillableStatus($status)
     {
-        return self::in_array_i($status, [
+        return self::inArrayCaseInsensitive($status, [
         self::ORDER_FULFILMENT_STATUS_UNFULFILLED,
         self::ORDER_FULFILMENT_STATUS_ERROR
         ]);
@@ -134,7 +141,7 @@ class Data extends AbstractHelper
      *
      * @return bool
      */
-    protected static function in_array_i($needle, $haystack)
+    protected static function inArrayCaseInsensitive($needle, $haystack)
     {
         return in_array(strtolower($needle), array_map('strtolower', $haystack));
     }

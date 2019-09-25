@@ -17,8 +17,8 @@
         <tr>
             <th>Lending Works Order Fulfilment Status</th>
             <td><?php echo $block->escapeHtml(ucfirst($block->getLWFulfilmentStatus())) ?>
-                <?php if ($block->canFulfill()) : ?>
-                <?php $url = $block->escapeUrl('/lwapi/order/fulfillorder?lw_id=' . $block->getLWID()) ?>
+                <?php if ($block->canFulfill()): ?>
+                    <?php $url = $block->escapeUrl('/lwapi/order/fulfillorder?lw_id=' . $block->getLWID()) ?>
                     <br><a
                             href="#order-information-table-lwdata"
                             onclick="confirmSetLocation(

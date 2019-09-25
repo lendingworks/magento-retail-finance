@@ -48,9 +48,10 @@ class Callback extends BaseAPIHandler
         LoggerInterface $logger,
         OrderRepository $orderRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
-        QuoteRepository $quoteRepository
+        QuoteRepository $quoteRepository,
+        Data $dataHelper
     ) {
-        parent::__construct($context, $scopeConfig, $checkoutSession, $logger);
+        parent::__construct($context, $scopeConfig, $checkoutSession, $logger, $dataHelper);
         $this->quoteRepository = $quoteRepository;
         $this->orderRepository = $orderRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;

@@ -38,16 +38,23 @@ abstract class BaseAPIHandler extends Action
    */
     protected $checkoutSession;
 
+  /**
+   * @var Data
+   */
+    protected $dataHelper;
+
     public function __construct(
         Context $context,
         ScopeConfigInterface $scopeConfig,
         CheckoutSession $checkoutSession,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        Data $dataHelper
     ) {
         parent::__construct($context);
         $this->scopeConfig = $scopeConfig;
         $this->checkoutSession = $checkoutSession;
         $this->logger = $logger;
+        $this->dataHelper = $dataHelper;
 
         // Handles pre-5.6.6 versions of PHP 5.6
         if (!defined('JSON_PRESERVE_ZERO_FRACTION')) {
@@ -78,9 +85,10 @@ abstract class BaseAPIHandler extends Action
    */
     protected function getRFPaymentConfig($key)
     {
-        if (!empty(Data::getOverrides()) && isset(Data::getOverrides()[$key])) {
+        $overrides = $this->dataHelper->getOverrides();
+        if (!empty($overrides) && isset($overrides[$key])) {
             $this->logger->debug('Using override for ' . $key);
-            return Data::getOverrides()[$key];
+            return $overrides[$key];
         }
         return $this->scopeConfig->getValue('payment/' . Data::PAYMENT_CODE . '/' . $key);
     }
@@ -125,10 +133,10 @@ abstract class BaseAPIHandler extends Action
    */
     protected function queryAPI($endpoint, $postData)
     {
-        if (isset(Data::getOverrides()[Data::OVERRIDE_MOCK_API_RESPONSE_KEY])) {
+        if (isset($this->dataHelper->getOverrides()[Data::OVERRIDE_MOCK_API_RESPONSE_KEY])) {
             return new Response(200, [], '{"token": "mock_turtle_soup"}');
         }
-        $apiURL = Data::getBaseURLForEnvironment($this->getRFPaymentConfig('target_server')) . $endpoint;
+        $apiURL = $this->dataHelper->getBaseURLForEnvironment($this->getRFPaymentConfig('target_server')) . $endpoint;
         $apiKey = $this->getRFPaymentConfig(Data::OVERRIDE_API_KEY_KEY);
         $headers = [
         'Content-type' => 'application/json',

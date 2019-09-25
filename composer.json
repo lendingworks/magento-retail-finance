@@ -2,7 +2,7 @@
   "name": "lendingworks/magento2-retailfinance",
   "description": "Lending Works Retail Finance integration for Magento 2",
   "type": "magento2-module",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "license": [
     "OSL-3.0"
   ],

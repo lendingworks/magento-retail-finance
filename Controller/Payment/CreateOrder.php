@@ -32,6 +32,8 @@ class CreateOrder extends BaseAPIHandler
             return $this->result(400, 'Unable to encode createOrder message body'. json_last_error_msg());
         }
 
+        $this->logger->debug($postData);
+
         $hash = hash('sha256', $postData . $quote->getCustomerEmail());
 
         $sessionData = $this->checkoutSession->getData(Data::ORDER_SESSION_KEY);
@@ -83,7 +85,8 @@ class CreateOrder extends BaseAPIHandler
     private function buildProductsData($quote)
     {
         $products = [];
-        $discount = 0.0000;
+        $totalDiscount = 0.0000;
+        $totalTax = 0.0000;
         /** @var Item $item */
         foreach ($quote->getItems() as $item) {
             $products[] = [
@@ -92,7 +95,7 @@ class CreateOrder extends BaseAPIHandler
             'description' => $item->getDescription() ?: $item->getName(),
             ];
             if ($item->getDiscountAmount() > 0) {
-                $discount -= $item->getDiscountAmount();
+                $totalDiscount -= $item->getDiscountAmount();
             }
         }
 
@@ -104,11 +107,25 @@ class CreateOrder extends BaseAPIHandler
         ];
 
         // Add any discount
-        if ($discount < 0) {
+        if ($totalDiscount < 0) {
             $products[] = [
-            'cost' => number_format($discount, 4, '.', ''),
+            'cost' => number_format($totalDiscount, 4, '.', ''),
             'quantity' => 1.0,
             'description' => 'Discount'
+            ];
+        }
+
+        $tax = isset($quote->getTotals()['tax']) ? $quote->getTotals()['tax'] : null;
+        if ($tax !== null) {
+            $totalTax = $tax->getDataByKey('value');
+        }
+
+        // Add any tax
+        if ($totalTax > 0) {
+            $products[] = [
+            'cost' => number_format($totalTax, 4, '.', ''),
+            'quantity' => 1.0,
+            'description' => 'Total tax applied'
             ];
         }
 
