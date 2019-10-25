@@ -37,11 +37,14 @@ class CreateOrder extends BaseAPIHandler
         $hash = hash('sha256', $postData . $quote->getCustomerEmail());
 
         $sessionData = $this->checkoutSession->getData(Data::ORDER_SESSION_KEY);
+        $scriptUrl = $this->dataHelper->getCheckoutScriptSourceForEnvironment(
+            $this->getRFPaymentConfig('target_server')
+        );
 
         if ($sessionData && !empty($sessionData[$hash])) {
             $additionalData = [
             'token' => $sessionData[$hash],
-            'script_url' => $this->getRFPaymentConfig(Data::OVERRIDE_SCRIPT_SOURCE_KEY),
+            'script_url' => $scriptUrl,
             ];
             return $this->result(200, 'Order token successfully loaded', $additionalData);
         }
@@ -72,7 +75,7 @@ class CreateOrder extends BaseAPIHandler
         $this->checkoutSession->setData(Data::ORDER_SESSION_KEY, [$hash => $result['token']]);
         $additionalData = [
         'token' => $result['token'],
-        'script_url' => $this->getRFPaymentConfig(Data::OVERRIDE_SCRIPT_SOURCE_KEY),
+        'script_url' => $scriptUrl,
         ];
         return $this->result(200, 'Order successfully created', $additionalData);
     }
